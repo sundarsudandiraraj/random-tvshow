@@ -41,7 +41,7 @@ jobs:
             git add .
             git commit -m "Update via CircleCI"
             # Push quietly to prevent showing the token in log
-            git push origin master
+            git push origin main
 
 
 
@@ -49,10 +49,10 @@ workflows:
   version: 2
   build-master:
     jobs:
-       - publishLatestToHub
-       - GenerateDeploymentYAML:
-          requires:
-            - publishLatestToHub
+      #  - publishLatestToHub
+       - GenerateDeploymentYAML
+          # requires:
+          #   - publishLatestToHub
           
                 
                  
