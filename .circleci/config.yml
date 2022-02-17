@@ -22,7 +22,7 @@ jobs:
             name: Publish Docker Image to Docker Hub
             command: |
               echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-              docker build -t $IMAGE_NAME .
+              docker build -t $IMAGE_NAME:${CIRCLE_BUILD_NUM} .
               docker push $IMAGE_NAME:${CIRCLE_BUILD_NUM}
     
     GenerateDeploymentYAML:
@@ -34,7 +34,7 @@ jobs:
         - run : |
             git clone https://github.com/sundarsudandiraraj/random-tvshow-cd.git /tmp/CircleCI-Webapp-CD
             cd /tmp/CircleCI-Webapp-CD/.k8s
-            cp /tmp/workspace/deployment.yaml .
+            cp /tmp/workspace/.k8s/deployment.yaml .
             sed -i 's/\(random-tvshow-node-app\)\(.*\)/\1:'$CIRCLE_PREVIOUS_BUILD_NUM'/' ./deployment.yaml
             git config credential.helper 'cache --timeout=120'
             git config user.email "CircleCI@sundar.co"
