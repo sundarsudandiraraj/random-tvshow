@@ -1,11 +1,19 @@
+import useSwr from 'swr'
 import Link from 'next/link'
 
-function PreactStars({ name, image }) {
+const fetcher = (url) => fetch(url).then((res) => res.json())
+
+export default function Index() {
+  const { data, error } = useSwr('/api/tvshow', fetcher)
+
+  if (error) return <div>Failed to load tv shows</div>
+  if (!data) return <div>Loading...</div>
+
   return (
     <div>
       <h1>Random Show to binge over the weekend</h1>
-      <p>{name}</p>
-      <img src={image}></img>
+      <p>{data.tvshow.name}</p>
+      <img src={data.tvshow.image}></img>
       <h5>
         <Link href="/random">
           <a>Nope, Show Something else</a>
@@ -14,17 +22,3 @@ function PreactStars({ name, image }) {
     </div>
   )
 }
-
-export async function getStaticProps() {
-  const res = await fetch('https://api.tvmaze.com/shows/'+ Math.floor( Math.random() * 240 ) + 1)
-  const json = await res.json()
-
-  return {
-    props: {
-      name: json.name,
-      image: json.image.medium
-    },
-  }
-}
-
-export default PreactStars
