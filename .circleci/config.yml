@@ -39,7 +39,7 @@ jobs:
             git config user.email "CircleCI@sundar.co"
             git config user.name "CircleCI"
             git add .
-            git commit -m "Update via CircleCI"
+            git commit -m "Update via CircleCI to tag: ${TAG}"
             # Push quietly to prevent showing the token in log
             git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/sundarsudandiraraj/random-tvshow-cd.git main
 

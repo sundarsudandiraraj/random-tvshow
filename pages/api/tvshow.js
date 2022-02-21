@@ -11,6 +11,9 @@ async function getStaticProps() {
 
   return {
       name: json.name,
-      image: json.image.medium
+      image: json.image.medium,
+      rating: json.rating.average,
+      language: json.language,
+      averageRuntime: json.averageRuntime
   }
 }

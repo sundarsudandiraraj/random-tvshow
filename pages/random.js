@@ -1,5 +1,6 @@
 import useSwr from 'swr'
 import Link from 'next/link'
+import styled from 'styled-components';
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
@@ -10,15 +11,27 @@ export default function Index() {
   if (!data) return <div>Loading...</div>
 
   return (
-    <div>
-      <h1>Random Show to binge over the weekend</h1>
-      <p>{data.tvshow.name}</p>
+    <Wrapper>
+      <Title>Random Show to binge over the weekend</Title>
+      <Name>{data.tvshow.name}</Name>
       <img src={data.tvshow.image}></img>
+      <Details>{data.tvshow.averageRuntime} mins | {data.tvshow.language} | {data.tvshow.rating} ⭐️ </Details>
       <h5>
-        <Link href="/random">
-          <a>Nope, Show Something else</a>
-        </Link>
+        <p>Hit refresh to see new suggestion</p>
       </h5>
-    </div>
+    </Wrapper>
   )
 }
+
+const Title = styled.h1`
+  color: #dd3737;
+`;
+const Name = styled.h3`
+  color: #4a37dd;
+`;
+const Details = styled.h4`
+  color: #4a37dd;
+`;
+const Wrapper = styled.div`
+  text-align: center;
+`;
